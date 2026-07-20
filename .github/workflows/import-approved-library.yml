@@ -1,45 +1,26 @@
 name: Finalise approved OTJ prompt library
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/import-approved-library.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  finalise-library:
+  verify-library:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
-      - name: Move approved library
-        shell: bash
+      - name: Verify approved library
         run: |
-          set -e
-          mkdir -p prompts
-          if [ -f OTJ_Approved_Prompt_Library_50.json ]; then
-            git mv OTJ_Approved_Prompt_Library_50.json prompts/OTJ_Approved_Prompt_Library_50.json
-          elif [ -f prompts/OTJ_Approved_Prompt_Library_50.json ]; then
-            echo 'Library already in prompts folder.'
-          else
-            echo 'Approved prompt library file not found.' >&2
-            exit 1
-          fi
-          git rm -f --ignore-unmatch prompts/.approved-library.json.gz.b64
-
-      - name: Commit final library location
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git diff --cached --quiet; then
-            echo 'No move required.'
-          else
-            git commit -m 'Move approved prompt library into prompts folder'
-            git push
-          fi
+          python - <<'PY'
+          import json
+          path = 'prompts/OTJ_Approved_Prompt_Library_50.json'
+          with open(path, encoding='utf-8') as handle:
+              data = json.load(handle)
+          assert data['prompt_count'] == 50
+          assert len(data['prompts']) == 50
+          assert len({p['id'] for p in data['prompts']}) == 50
+          print('Validated 50 unique approved prompts.')
+          PY
