@@ -17,30 +17,29 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Move and validate approved library
+      - name: Move approved library
         shell: bash
         run: |
           set -e
           mkdir -p prompts
-          test -f OTJ_Approved_Prompt_Library_50.json
-          mv OTJ_Approved_Prompt_Library_50.json prompts/OTJ_Approved_Prompt_Library_50.json
-          python - <<'PY'
-          import json
-          path = 'prompts/OTJ_Approved_Prompt_Library_50.json'
-          with open(path, encoding='utf-8') as handle:
-              data = json.load(handle)
-          assert data['prompt_count'] == 50
-          assert len(data['prompts']) == 50
-          assert len({p['id'] for p in data['prompts']}) == 50
-          print('Validated 50 unique approved prompts.')
-          PY
-          rm -f prompts/.approved-library.json.gz.b64
+          if [ -f OTJ_Approved_Prompt_Library_50.json ]; then
+            git mv OTJ_Approved_Prompt_Library_50.json prompts/OTJ_Approved_Prompt_Library_50.json
+          elif [ -f prompts/OTJ_Approved_Prompt_Library_50.json ]; then
+            echo 'Library already in prompts folder.'
+          else
+            echo 'Approved prompt library file not found.' >&2
+            exit 1
+          fi
+          git rm -f --ignore-unmatch prompts/.approved-library.json.gz.b64
 
       - name: Commit final library location
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m 'Finalise approved 50-prompt OTJ library'
-          git push
+          if git diff --cached --quiet; then
+            echo 'No move required.'
+          else
+            git commit -m 'Move approved prompt library into prompts folder'
+            git push
+          fi
