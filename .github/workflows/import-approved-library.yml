@@ -1,50 +1,46 @@
-name: Import approved OTJ prompt library
+name: Finalise approved OTJ prompt library
 
 on:
   push:
     branches: [main]
     paths:
-      - 'prompts/.approved-library.json.gz.b64'
       - '.github/workflows/import-approved-library.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  import-library:
+  finalise-library:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Recreate approved JSON library
+      - name: Move and validate approved library
         shell: bash
         run: |
-          python - <<'PY'
-          import base64, gzip, pathlib
-          source = pathlib.Path('prompts/.approved-library.json.gz.b64')
-          target = pathlib.Path('prompts/OTJ_Approved_Prompt_Library_50.json')
-          target.write_bytes(gzip.decompress(base64.b64decode(source.read_text().strip())))
-          PY
+          set -e
+          mkdir -p prompts
+          test -f OTJ_Approved_Prompt_Library_50.json
+          mv OTJ_Approved_Prompt_Library_50.json prompts/OTJ_Approved_Prompt_Library_50.json
           python - <<'PY'
           import json
           path = 'prompts/OTJ_Approved_Prompt_Library_50.json'
-          data = json.load(open(path, encoding='utf-8'))
+          with open(path, encoding='utf-8') as handle:
+              data = json.load(handle)
           assert data['prompt_count'] == 50
           assert len(data['prompts']) == 50
           assert len({p['id'] for p in data['prompts']}) == 50
           print('Validated 50 unique approved prompts.')
           PY
+          rm -f prompts/.approved-library.json.gz.b64
 
-      - name: Commit approved library and remove temporary import files
+      - name: Commit final library location
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add prompts/OTJ_Approved_Prompt_Library_50.json
-          git rm prompts/.approved-library.json.gz.b64
-          git rm .github/workflows/import-approved-library.yml
-          git commit -m 'Add approved 50-prompt OTJ library'
+          git add -A
+          git commit -m 'Finalise approved 50-prompt OTJ library'
           git push
-
-# One-time workflow retriggered after installation.
