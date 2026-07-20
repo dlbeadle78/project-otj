@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EPA PD Questions reference data schema",
+  "type": "object",
+  "required": ["product", "levels"],
+  "properties": {
+    "product": {"type": "string"},
+    "purpose": {"type": "string"},
+    "levels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["level", "standard", "grading", "sections"],
+        "properties": {
+          "level": {"type": "string"},
+          "standard": {"type": "string"},
+          "grading": {"type": "array", "items": {"type": "string"}},
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["section_name", "groups"],
+              "properties": {
+                "section_code": {"type": "string"},
+                "section_name": {"type": "string"},
+                "source_label": {"type": "string"},
+                "groups": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["group_code", "ksbs", "sample_questions", "source_question_count"],
+                    "properties": {
+                      "group_code": {"type": "string"},
+                      "group_label": {"type": "string"},
+                      "ksbs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": ["code", "wording"],
+                          "properties": {
+                            "code": {"type": "string"},
+                            "wording": {"type": "string"},
+                            "pass_descriptor": {"type": "string"},
+                            "merit_descriptor": {"type": "string"},
+                            "distinction_descriptor": {"type": "string"}
+                          }
+                        }
+                      },
+                      "sample_questions": {"type": "array", "items": {"type": "string"}},
+                      "source_question_count": {"type": "integer", "minimum": 0},
+                      "grading_descriptors": {"type": "object"},
+                      "source_note": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
