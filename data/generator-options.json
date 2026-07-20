@@ -1,0 +1,53 @@
+{
+  "activityTypes": [
+    "Practical activity",
+    "Knowledge activity",
+    "Reflection",
+    "Research",
+    "Shadowing",
+    "Case study",
+    "Policy review",
+    "Professional discussion preparation",
+    "Workplace observation and review"
+  ],
+  "durationsMinutes": [20, 30, 45, 60, 90],
+  "extendedDurationOption": "90+",
+  "serviceTypes": [
+    "Residential care",
+    "Community care",
+    "Supported living",
+    "Day service",
+    "Other adult care setting"
+  ],
+  "peopleSupported": [
+    "Older people",
+    "People with learning disabilities",
+    "People with mental health needs",
+    "People living with dementia",
+    "Autistic people",
+    "People with physical disabilities",
+    "Mixed or other support needs"
+  ],
+  "packSizes": [1, 5, 10],
+  "requiredFields": [
+    "level",
+    "topic",
+    "activityType",
+    "duration"
+  ],
+  "optionalFields": [
+    "serviceType",
+    "peopleSupported",
+    "learnerRole",
+    "workplaceContext",
+    "learningPurpose",
+    "taskFocus"
+  ],
+  "displayRules": [
+    "Selections must collapse after a choice is made.",
+    "Generated output must be easy to copy in full.",
+    "The generated prompt must open cleanly in ChatGPT.",
+    "Activities may take longer than the suggested time; users must record the actual time spent.",
+    "KSB links are guidance only."
+  ]
+}
