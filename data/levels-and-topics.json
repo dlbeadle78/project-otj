@@ -1,0 +1,77 @@
+{
+  "product": "Project OTJ",
+  "audience": "Health and Social Care Learning Coaches",
+  "levels": {
+    "2": {
+      "name": "Adult Care Worker",
+      "topics": [
+        "Your Role and Duty of Care",
+        "Personal Development",
+        "Personal Well-being",
+        "Health and Wellbeing",
+        "Mental Health and Wellbeing",
+        "Person-Centred Care",
+        "Equality, Diversity and Inclusion",
+        "Communication",
+        "Choice and Independence",
+        "Safeguarding",
+        "Mental Capacity and Restrictive Practice",
+        "Health and Safety"
+      ]
+    },
+    "3": {
+      "name": "Lead Adult Care Worker",
+      "topics": [
+        "Your Role and Duty of Care",
+        "Personal Development",
+        "Personal Well-being",
+        "Health and Wellbeing",
+        "Mental Health and Wellbeing",
+        "Person-Centred Care",
+        "Equality, Diversity and Inclusion",
+        "Communication",
+        "Choice and Independence",
+        "Safeguarding",
+        "Mental Capacity and Restrictive Practice",
+        "Health and Safety"
+      ]
+    },
+    "4": {
+      "name": "Lead Practitioner in Adult Care",
+      "topics": [
+        "Professional Development",
+        "Leadership and Management",
+        "Communication",
+        "Teams and Partnership Working",
+        "Statutory Responsibilities",
+        "Quality and Compliance",
+        "Leading Person-Centred Practice",
+        "Safeguarding",
+        "Health, Safety and Risk",
+        "Research and Evidence-Informed Practice",
+        "General"
+      ]
+    },
+    "5": {
+      "name": "Leader in Adult Care",
+      "topics": [
+        "Professional Development",
+        "Leadership and Management",
+        "Change Management",
+        "Communication",
+        "Teams and Partnership Working",
+        "Statutory Responsibilities",
+        "Quality and Compliance",
+        "Leading Person-Centred Practice",
+        "Safeguarding",
+        "Research Project",
+        "General"
+      ]
+    }
+  },
+  "rules": [
+    "Topic labels must remain consistent across the generator and prompt library.",
+    "Do not invent or guess KSB codes.",
+    "Any KSB links shown to users are guidance only and must be checked against the approved standard documents."
+  ]
+}
