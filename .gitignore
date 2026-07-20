@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+coverage/
+.tmp/
+tmp/
+# Build output is retained in the v31 import for provenance; future builds may regenerate it.
